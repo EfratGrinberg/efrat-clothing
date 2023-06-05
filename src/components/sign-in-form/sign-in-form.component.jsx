@@ -9,7 +9,7 @@ import {
 import FormInput from "../form-input/form-input.component";
 import "./sign-in.styles.scss";
 import Button from "../button/button.component";
-import { UserContext } from "../../contexts/user.context";
+// import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
   displayName: "",
   email: "",
@@ -20,14 +20,13 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const { setCurrentUser } = useContext(UserContext);
+  // const { setCurrentUser } = useContext(UserContext);
   const resetFormField = () => {
     setFormFields(defaultFormFields);
   };
 
   const SignInWIthGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();    
   };
 
   const HandleSubmit = async (event) => {
@@ -35,7 +34,7 @@ const SignInForm = () => {
 
     try {
       const { user } = await signInAuthWithEmailAndPassword(email, password);
-      setCurrentUser(user);
+      // setCurrentUser(user);
       resetFormField();
     } catch (error) {
       switch (error.code) {
