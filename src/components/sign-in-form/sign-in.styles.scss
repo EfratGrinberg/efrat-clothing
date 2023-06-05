@@ -1,0 +1,23 @@
+.label {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.sign-up-container{
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+
+  .button-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  h2{
+    margin: 10px 0;
+  }
+
+}
+
+
+
