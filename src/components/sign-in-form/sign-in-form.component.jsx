@@ -8,7 +8,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in.styles.scss";
-import Button from "../button/button.component";
+import Button, {Button_Type_Classes}from "../button/button.component";
 // import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
   displayName: "",
@@ -87,7 +87,7 @@ const SignInForm = () => {
 
         <div className="button-container">
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" onClick={SignInWIthGoogle}>
+          <Button type="button" buttonType={Button_Type_Classes.google} onClick={SignInWIthGoogle}>
             Google sign in
           </Button>
         </div>
