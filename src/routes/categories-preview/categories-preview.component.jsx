@@ -1,25 +1,25 @@
 import React from "react";
-import { useContext, Fragment } from "react";
-import { CategoriesContext } from "../../contexts/categories.context.jsx";
-// import ProductCard from "../../components/product-card/product-card.component";
+import { Fragment } from "react";
+import { useSelector } from 'react-redux';
+// import { CategoriesContext } from "../../contexts/categories.context.jsx";
 import CategoryPreview from "../../components/category-preview/category-preview.component.jsx";
+import { selectCategoriesMap } from '../../store/categories/category.selector.js';
 
 const CategoriesPreview = () => {
-  const { categoriesMap } = useContext(CategoriesContext);
+  const categoriesMap = useSelector(selectCategoriesMap);
 
   if (!categoriesMap) {
-    return;
+    return null; 
   }
+
   return (
-    <Fragment className="category-preview-container">
+    <Fragment>
       {Object.keys(categoriesMap).map((title) => {
-        const products=categoriesMap[title];
-        return <CategoryPreview key={title} title={title} products={products}/>
+        const products = categoriesMap[title];
+        return <CategoryPreview key={title} title={title} products={products} />;
       })}
     </Fragment>
   );
 };
 
 export default CategoriesPreview;
-
-
