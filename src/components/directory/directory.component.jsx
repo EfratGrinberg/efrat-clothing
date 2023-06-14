@@ -1,48 +1,48 @@
-import DirectoryItem from "../directory-item/directory-item.component"; 
-import './directory.styles.scss'
+import React from 'react';
+import DirectoryItem from '../directory-item/directory-item.component';
+import { DirectoryContainer } from './directory.styles';
 
 const categories = [
   {
     id: 1,
-    title: "hats",
+    title: 'hats',
     imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
-    route:'shop/hats'
+    route: 'shop/hats',
   },
   {
     id: 2,
-    title: "jackets",
+    title: 'jackets',
     imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
-    route:'shop/jackets'
+    route: 'shop/jackets',
   },
   {
     id: 3,
-    title: "sneakers",
+    title: 'sneakers',
     imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
-    route:'shop/sneakers'
+    route: 'shop/sneakers',
   },
   {
     id: 4,
-    title: "womens",
+    title: 'womens',
     imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
-    route:'shop/women'
+    route: 'shop/womens',
   },
   {
     id: 5,
-    title: "mens",
+    title: 'mens',
     imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
-    route:'shop/mens'
-  }
-]
+    route: 'shop/mens',
+  },
+];
 
-
-const Direcory = () => {
+export const Directory = () => {
   return (
-    <div className="directory-container">
+    <DirectoryContainer>
       {categories.map((category) => (
         <DirectoryItem key={category.id} category={category} />
       ))}
-    </div>
+    </DirectoryContainer>
   );
 };
 
-export default Direcory;
+export default Directory;

@@ -1,25 +1,31 @@
-import React from "react";
-import { Fragment } from "react";
-import { useSelector } from 'react-redux';
-// import { CategoriesContext } from "../../contexts/categories.context.jsx";
-import CategoryPreview from "../../components/category-preview/category-preview.component.jsx";
-import { selectCategoriesMap } from '../../store/categories/category.selector.js';
+import ProductCard from '../../components/product-card/product-card.component';
 
-const CategoriesPreview = () => {
-  const categoriesMap = useSelector(selectCategoriesMap);
+import {
+  CategoryPreviewContainer,
+  Title,
+  Preview,
+} from './category-preview.styles';
 
-  if (!categoriesMap) {
-    return null; 
+const CategoryPreview = ({ title, products }) => {
+  if (!title) {
+    return null; // or render a default title
   }
 
   return (
-    <Fragment>
-      {Object.keys(categoriesMap).map((title) => {
-        const products = categoriesMap[title];
-        return <CategoryPreview key={title} title={title} products={products} />;
-      })}
-    </Fragment>
+    <CategoryPreviewContainer>
+      <h2>
+        <Title to={title}>{title.toUpperCase()}</Title>
+      </h2>
+      <Preview>
+        {products
+          .filter((_, idx) => idx < 4)
+          .map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+      </Preview>
+    </CategoryPreviewContainer>
   );
 };
 
-export default CategoriesPreview;
+
+export default CategoryPreview;

@@ -1,33 +1,40 @@
+import { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import "./category.styles.scss";
-import { useParams } from "react-router-dom";
-import { useContext, useState, useEffect, Fragment } from "react";
-import { selectCategoriesMap } from '../../store/categories/category.selector'
-// import { CategoriesContext } from "../../contexts/categories.context";
-import ProductCard from "../../components/product-card/product-card.component";
+import { useParams } from 'react-router-dom';
+
+import ProductCard from '../../components/product-card/product-card.component';
+import Spinner from '../../components/spinner/spinner.component';
+
+import {
+  selectCategoriesMap,
+  selectIsLoading,
+} from '../../store/categories/category.selector';
+
+import { CategoryContainer, Title } from './category.styles';
 
 const Category = () => {
   const { category } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
-  // const { categoriesMap } = useContext(CategoriesContext);
-  const [products, setProducts] = useState(categoriesMap && categoriesMap[category]);
+  const isLoading = useSelector(selectIsLoading);
+  const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {
-    setProducts(categoriesMap && categoriesMap[category]);
+    setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
-
-  if (!products) {
-    return null; // או תוכל להציג הודעת שגיאה או תצוגה אחרת במקום null, כפי שמתאים לך
-  }
 
   return (
     <Fragment>
-      <h2 className="category-title">{category}</h2>
-      <div className="category-container">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <Title>{category.toUpperCase()}</Title>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <CategoryContainer>
+          {products &&
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </CategoryContainer>
+      )}
     </Fragment>
   );
 };

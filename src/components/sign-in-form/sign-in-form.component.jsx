@@ -1,98 +1,84 @@
-import { useState, useContext } from "react";
+import { useState } from 'react';
+
+import FormInput from '../form-input/form-input.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+
 import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-  createUserWithEmailAndPassword,
+  signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
-  signInAuthWithEmailAndPassword
-} from "../../utils/firebase/firebase.utils";
-import FormInput from "../form-input/form-input.component";
-import "./sign-in.styles.scss";
-import Button, {Button_Type_Classes}from "../button/button.component";
-// import { UserContext } from "../../contexts/user.context";
+} from '../../utils/firebase/firebase.utils';
+
+import { SignInContainer, ButtonsContainer } from './sign-in.styles';
+
 const defaultFormFields = {
-  displayName: "",
-  email: "",
-  password: "",
-  confirmPassword: ""
+  email: '',
+  password: '',
 };
 
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  // const { setCurrentUser } = useContext(UserContext);
-  const resetFormField = () => {
+
+  const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-  const SignInWIthGoogle = async () => {
-    await signInWithGooglePopup();    
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
   };
 
-  const HandleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthWithEmailAndPassword(email, password);
-      // setCurrentUser(user);
-      resetFormField();
+      await signInAuthUserWithEmailAndPassword(email, password);
+      resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          alert("Incorrect password for email");
-          break;
-        case "auth/user-not-found":
-          alert("Email isnt found");
-          break;
-        default:
-          console.log(error.code);
-      }
-
-      if (error.code == "auth/wrong-password") {
-        alert("Incorrect password for email");
-      }
-      if (error.code == "auth/user-not-found") {
-        alert("Email isnt found");
-      }
+      console.log('user sign in failed', error);
     }
   };
 
-  const HandleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormFields({ ...formFields, [name]: value });
   };
 
   return (
-    <div className="sign-up-container">
-      <h2>Already have an account</h2>
-      <span>sign in with your email & password</span>
-      <form onSubmit={HandleSubmit}>
+    <SignInContainer>
+      <h2>Already have an account?</h2>
+      <span>Sign in with your email and password</span>
+      <form onSubmit={handleSubmit}>
         <FormInput
-          label="Email"
-          type="email"
+          label='Email'
+          type='email'
           required
-          onChange={HandleChange}
-          name="email"
+          onChange={handleChange}
+          name='email'
           value={email}
         />
 
         <FormInput
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           required
-          onChange={HandleChange}
-          name="password"
+          onChange={handleChange}
+          name='password'
           value={password}
         />
-
-        <div className="button-container">
-          <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType={Button_Type_Classes.google} onClick={SignInWIthGoogle}>
-            Google sign in
+        <ButtonsContainer>
+          <Button type='submit'>Sign In</Button>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            type='button'
+            onClick={signInWithGoogle}
+          >
+            Sign In With Google
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
+
 export default SignInForm;
