@@ -5,7 +5,7 @@ import {
   selectCartTotal,
 } from '../../store/cart/cart.selector';
 
-import CheckoutItem from '../../components/checkout-item/checkoutItem.component'
+import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 
 import {
   CheckoutContainer,
